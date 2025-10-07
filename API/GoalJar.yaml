@@ -1,0 +1,105 @@
+openapi: 3.0.0
+info: 
+  title: "Спецификация для онлайн копилки"
+  version: '1.0.0'
+  
+paths:
+  /goals: 
+    get: 
+      summary: Метод для получения списка целей
+      description: Метод для получения списка целей
+      tags: 
+        - Goals
+      operationId: getAllGoals
+      responses:
+        '200':
+          description: Успешный ответ со списком целей
+          content: 
+            aplication/json: 
+              schema: 
+                $ref: '#/components/schemas/Goals'
+        default: 
+          description: Нестандартная ошибка
+          content: 
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Error'
+  /goals/{goal_id}:
+    get: 
+      summary: Метод для получения цели по идентификатору
+      tags: 
+        - Goals
+      operationId: getGoalById
+      parameters: 
+        - name: goal_id
+          in: path 
+          required: true
+          description: Идентификатор цели 
+          schema: 
+            type: string
+            example: 16763be4-6022-406e-a950-fcd5018633ca
+      responses:
+        '200':
+          description: Успешный ответ со списком целей
+          content: 
+            aplication/json: 
+              schema: 
+                $ref: '#/components/schemas/Goal'
+        default: 
+          description: Нестандартная ошибка
+          content: 
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Error'
+              
+              
+              
+              
+components: 
+  schemas: 
+    Goal: 
+      type: object
+      required: 
+        - name
+        - goal_sum  
+      properties: 
+        id: 
+          type: string
+          example: 16763be4-6022-406e-a950-fcd5018633ca
+        name: 
+          type: string
+          example: 'На отпуск'
+        sum: 
+          type: integer
+          example: 2500
+        goal_sum: 
+          type: integer
+          example: 50000
+        stikear_id: 
+          type: string
+          example: 16763be4-6022-406e-a950-fcd5018633ca
+        created_by:
+          type: string
+          example: 16763be4-6022-406e-a950-fcd5018633ca
+        created_at: 
+          type: string
+          example: 2005-08-09T18:31:42.201
+
+
+    Goals: 
+      type: array
+      items: 
+        $ref: '#/components/schemas/Goal'
+
+    Error: 
+      type: object
+      required: 
+        - code
+        - message
+      properties: 
+        code: 
+          type: integer 
+        message: 
+          type: string 
+
+      
